@@ -1,0 +1,177 @@
+Loader :Faylı transform edir.
+Misal:
+SCSS → CSS
+TS → JS
+JSX → JS
+
+src/
+  index.js
+  math.js
+  utils.js
+
+  index.js
+import { sum } from "./math";
+import { log } from "./utils";
+
+log(sum(2, 3));
+math.js
+export function sum(a, b) {
+  return a + b;
+}
+utils.js
+export function log(value) {
+  console.log(value);
+}
+Burda nə baş verir?
+index.js → math.js istifadə edir
+index.js → utils.js istifadə edir
+
+Yəni:
+
+index.js
+  ├── math.js
+  └── utils.js
+
+Buna deyilir:
+Dependency graph = hansı fayl hansı fayldan istifadə edir xəritəsi
+
+Webpack bunu edir:
+
+entry faylı tapır (index.js)
+import-ları oxuyur
+hamısını izləyir
+bir “xəritə” qurur 
+
+Bundle nədir?
+
+Webpack sonda belə edir:
+
+src/index.js
+src/math.js
+src/utils.js
+
+→ bunların hamısını birləşdirir
+
+→ belə çıxarır:
+
+dist/bundle.js
+Bundle nədir?
+
+👉 Bundle = bütün kodun bir faylda yığılmış versiyası
+Niyə lazımdır?
+
+Əvvəllər:
+
+<script src="math.js"></script>
+<script src="utils.js"></script>
+<script src="index.js"></script>
+
+Problemlər:
+
+sıra səhv ola bilər
+çox request
+idarə etmək çətin
+Webpack:
+
+<script src="bundle.js"></script>
+
+✔ 1 fayl
+✔ optimallaşdırılmış
+✔ hazır işlək
+
+Minification nədir?
+
+Bu kodu düşün:
+
+function sum(a, b) {
+  return a + b;
+}
+
+Webpack production-da bunu belə edir:
+
+function n(n,o){return n+o}
+Sadə dillə:
+
+👉 Minification = kodu qısaltmaq
+Nələri edir:
+
+boşluqları silir
+dəyişən adlarını qısaldır
+lazımsız şeyləri çıxarır
+Nəticə:
+
+✔ daha kiçik fayl
+✔ daha sürətli say
+Sadə dillə:
+
+👉 Tree shaking = istifadə olunmayan kodu atmaq
+Niyə “tree”?
+
+Çünki dependency graph ağaca bənzəyir 🌳
+
+İstifadə olunmayan budaqları kəsir ✂️
+
+6) Production mode nə edir?
+
+Sən yazırsan:
+
+mode: "production"
+
+Webpack avtomatik açır:
+
+Feature	Nə edir
+Minification	kodu kiçildir
+Tree shaking	lazımsız kodu silir
+Scope hoisting	performansı artırır
+mode: "production"
+
+= “mənim kodumu optimallaşdır”
+
+Development vs Production
+development
+debug rahat
+kod oxunaqlı
+böyük fayl
+production
+kiçik fayl
+sürətli sayt
+optimallaşdırılmış
+Dependency Graph
+
+👉 kim kimdən istifadə edir
+
+Bundle
+
+👉 hamısı bir faylda
+
+Minification
+
+👉 kodu kiçiltmək
+
+Tree Shaking
+
+👉 istifadə olunmayan kodu silmək
+
+Production mode
+
+👉 hamısını avtomatik aktiv edir
+Plugin: Build prosesinə müdaxilə edir.
+Misal:
+HTML yaratmaq
+dist təmizləmək
+env inject etmək
+compression
+bundle analysis
+
+
+Rəsmi docs-a görə production mode bir çox optimizasiyanı avtomatik açır: minification, tree shaking, scope hoisting və s. Buna görə production build üçün ilk addım həmişə mode: "production" qoymaqdır.
+development
+debugging rahat
+source map rahat
+readable output
+build sürətli
+production
+minified code
+daha kiçik bundle
+daha yaxşı performance
+dead code removal üçün imkanlar
