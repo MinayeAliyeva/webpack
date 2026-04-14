@@ -1,0 +1,100 @@
+Bunlar nə üçündür:
+
+webpack — əsas engine
+webpack-cli — terminaldan işlətmək üçün
+webpack-dev-server — local server
+html-webpack-plugin — HTML avtomatik yaratmaq üçün
+style-loader — CSS-i səhifəyə inject edir
+css-loader — CSS import etməyə imkan verir
+
+
+
+css-loader nə edir?
+
+Tutaq ki sən yazırsan:
+
+import "./style.css";
+
+JavaScript bunu başa düşmür ❌
+Webpack də default olaraq CSS-i başa düşmür ❌
+
+css-loader-ın işi:
+
+👉 CSS faylını JavaScript moduluna çevirir
+
+Misal
+style.css
+body {
+  background: red;
+}
+
+css-loader bunu təxminən belə edir:
+
+// pseudo kod
+const css = "body { background: red; }";
+export default css;
+Sadə dillə:
+
+👉 css-loader = CSS-i JS-ə çevirir
+
+2) style-loader nə edir?
+
+İndi bizdə CSS artıq JS string kimi var.
+
+Amma problem:
+
+👉 Bu CSS necə səhifəyə düşəcək?
+
+style-loader-ın işi:
+
+👉 CSS-i götürüb <style> tag kimi DOM-a əlavə edir
+
+Real nəticə:
+<style>
+  body {
+    background: red;
+  }
+</style>
+
+Brauzer bunu görür → tətbiq edir ✔
+
+Sadə dillə:
+
+👉 style-loader = CSS-i səhifəyə inject edir
+
+3) Birlikdə necə işləyirlər?
+use: ["style-loader", "css-loader"]
+
+İşləmə sırası:
+
+👉 sağdan sola
+
+css-loader → CSS → JS edir
+style-loader → JS → DOM-a inject edir
+Vizual:
+style.css
+   ↓ (css-loader)
+JS string
+   ↓ (style-loader)
+<style>...</style> → browser
+4) Niyə 2 loader lazımdır?
+
+Çünki Webpack belə işləyir:
+
+👉 Hər şeyi JavaScript kimi idarə edir
+
+CSS də əvvəl JS olmalıdır → sonra DOM-a gedir
+
+Plugin webpack-ə əlavə güc verən moduldur.
+
+Qısa fərq:
+
+loader faylı çevirir və ya emal edir
+plugin isə build prosesinin özünə qarışır
+Məsələn:
+
+HTML faylı avtomatik yaratmaq
+bundle-ları optimize etmək
+environment variable əlavə etmək
+köhnə faylları silmək
+build zamanı report çıxarmaq
